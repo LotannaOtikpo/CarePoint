@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
+  Activity,
   BedDouble,
   CalendarDays,
   ChevronRight,
@@ -30,15 +31,22 @@ const NAV = {
     navItem('/doctors', 'Doctors', Stethoscope),
     navItem('/appointments', 'Appointments', CalendarDays),
     navItem('/admissions', 'Admissions', BedDouble),
+    navItem('/wards', 'Wards & Beds', BedDouble),
+    navItem('/laboratory', 'Laboratory', Activity),
+    navItem('/pharmacy', 'Pharmacy Stock', Pill),
     navItem('/medical-records', 'Medical Records', FileHeart),
     navItem('/prescriptions', 'Prescriptions', Pill),
     navItem('/billing', 'Billing', CreditCard),
+    navItem('/insurance', 'HMO Insurance', ShieldCheck),
     navItem('/users', 'User Management', UserCog),
   ],
   doctor: [
     navItem('/', 'Overview', LayoutDashboard),
     navItem('/appointments', 'My Appointments', CalendarDays),
     navItem('/patients', 'Patients', Users),
+    navItem('/wards', 'Ward Matrix', BedDouble),
+    navItem('/laboratory', 'Laboratory', Activity),
+    navItem('/pharmacy', 'Pharmacy Formulary', Pill),
     navItem('/medical-records', 'Medical Records', FileHeart),
     navItem('/prescriptions', 'Prescriptions', Pill),
     navItem('/availability', 'My Availability', ClipboardList),
@@ -48,7 +56,10 @@ const NAV = {
     navItem('/patients', 'Patients', Users),
     navItem('/appointments', 'Appointments', CalendarDays),
     navItem('/admissions', 'Admissions', BedDouble),
+    navItem('/wards', 'Wards & Beds', BedDouble),
+    navItem('/laboratory', 'Laboratory', Activity),
     navItem('/billing', 'Billing', CreditCard),
+    navItem('/insurance', 'HMO Claims', ShieldCheck),
     navItem('/doctors', 'Doctors', Stethoscope),
   ],
   patient: [

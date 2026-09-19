@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import client from '../api/client';
 import Modal from '../components/Modal';
 import Pagination from '../components/Pagination';
@@ -90,6 +91,9 @@ export default function Patients() {
                   <td>{p.blood_group || '—'}</td><td>{p.phone || '—'}</td>
                   {canEdit && (
                     <td>
+                      <Link to={`/patients/${p.id}/vitals`} className="btn small" style={{ marginRight: '0.35rem', background: 'var(--primary-soft)', color: 'var(--primary-dark)', border: '1px solid var(--primary)' }}>
+                        Vitals & Allergies
+                      </Link>
                       <button className="btn secondary small" onClick={() => open(p)}>Edit</button>{' '}
                       <button className="btn danger small" onClick={() => remove(p)}>Delete</button>
                     </td>

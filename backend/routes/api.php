@@ -9,8 +9,13 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentPaymentController;
+use App\Http\Controllers\InsuranceClaimController;
+use App\Http\Controllers\LabOrderController;
+use App\Http\Controllers\PatientVitalController;
+use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WardBedController;
 use Illuminate\Support\Facades\Route;
 
 // Public
@@ -103,4 +108,46 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // User management (admin only)
     Route::apiResource('users', UserController::class)->middleware('role:admin');
+
+    // Patient Vitals & Allergies
+    Route::get('/patients/{patient}/vitals', [PatientVitalController::class, 'index']);
+    Route::post('/patients/{patient}/vitals', [PatientVitalController::class, 'storeVital'])
+        ->middleware('role:admin,doctor,receptionist');
+    Route::post('/patients/{patient}/allergies', [PatientVitalController::class, 'storeAllergy'])
+        ->middleware('role:admin,doctor');
+    Route::delete('/allergies/{allergy}', [PatientVitalController::class, 'destroyAllergy'])
+        ->middleware('role:admin,doctor');
+
+    // Wards & Bed Management Matrix
+    Route::get('/wards', [WardBedController::class, 'indexWards']);
+    Route::get('/beds', [WardBedController::class, 'indexBeds']);
+    Route::put('/beds/{bed}/status', [WardBedController::class, 'updateBedStatus'])
+        ->middleware('role:admin,receptionist,doctor');
+    Route::post('/beds/{bed}/discharge', [WardBedController::class, 'dischargeBed'])
+        ->middleware('role:admin,receptionist,doctor');
+
+    // Laboratory & Diagnostic Investigations
+    Route::get('/lab-tests/catalog', [LabOrderController::class, 'catalog']);
+    Route::get('/lab-orders', [LabOrderController::class, 'index']);
+    Route::post('/lab-orders', [LabOrderController::class, 'store'])
+        ->middleware('role:admin,doctor');
+    Route::put('/lab-orders/{labOrder}/results', [LabOrderController::class, 'updateResults'])
+        ->middleware('role:admin,doctor');
+
+    // Hospital Pharmacy & Formulary
+    Route::get('/pharmacy/medicines', [PharmacyController::class, 'index']);
+    Route::post('/pharmacy/medicines', [PharmacyController::class, 'store'])
+        ->middleware('role:admin');
+    Route::post('/pharmacy/dispense', [PharmacyController::class, 'dispense'])
+        ->middleware('role:admin,doctor,receptionist');
+    Route::get('/pharmacy/dispensations', [PharmacyController::class, 'dispensations']);
+
+    // HMO Health Insurance & Split Billing Claims
+    Route::get('/insurance/providers', [InsuranceClaimController::class, 'providers']);
+    Route::post('/insurance/policies', [InsuranceClaimController::class, 'storePolicy'])
+        ->middleware('role:admin,receptionist');
+    Route::get('/insurance/pending-bills', [InsuranceClaimController::class, 'pendingBills']);
+    Route::get('/insurance/claims', [InsuranceClaimController::class, 'claims']);
+    Route::post('/insurance/claims', [InsuranceClaimController::class, 'storeClaim'])
+        ->middleware('role:admin,receptionist');
 });

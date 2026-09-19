@@ -13,6 +13,11 @@ import Prescriptions from './pages/Prescriptions';
 import Billing from './pages/Billing';
 import Users from './pages/Users';
 import Availability from './pages/Availability';
+import Wards from './pages/Wards';
+import Laboratory from './pages/Laboratory';
+import Pharmacy from './pages/Pharmacy';
+import Insurance from './pages/Insurance';
+import PatientVitals from './pages/PatientVitals';
 
 export default function App() {
   return (
@@ -23,12 +28,22 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/patients" element={
           <ProtectedRoute roles={['admin', 'receptionist', 'doctor']}><Patients /></ProtectedRoute>} />
+        <Route path="/patients/:id/vitals" element={
+          <ProtectedRoute roles={['admin', 'receptionist', 'doctor']}><PatientVitals /></ProtectedRoute>} />
         <Route path="/doctors" element={<Doctors />} />
         <Route path="/appointments" element={<Appointments />} />
         <Route path="/admissions" element={<Admissions />} />
+        <Route path="/wards" element={
+          <ProtectedRoute roles={['admin', 'receptionist', 'doctor']}><Wards /></ProtectedRoute>} />
+        <Route path="/laboratory" element={
+          <ProtectedRoute roles={['admin', 'receptionist', 'doctor']}><Laboratory /></ProtectedRoute>} />
+        <Route path="/pharmacy" element={
+          <ProtectedRoute roles={['admin', 'receptionist', 'doctor']}><Pharmacy /></ProtectedRoute>} />
         <Route path="/medical-records" element={<MedicalRecords />} />
         <Route path="/prescriptions" element={<Prescriptions />} />
         <Route path="/billing" element={<Billing />} />
+        <Route path="/insurance" element={
+          <ProtectedRoute roles={['admin', 'receptionist']}><Insurance /></ProtectedRoute>} />
         <Route path="/users" element={
           <ProtectedRoute roles={['admin']}><Users /></ProtectedRoute>} />
         <Route path="/availability" element={
