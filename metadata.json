@@ -1,0 +1,6 @@
+{
+  "name": "CarePoint | Apex Health Technologies",
+  "description": "Full-stack hospital management system with role-based access for Admin, Doctor, Receptionist, and Patient.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
